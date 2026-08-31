@@ -1,0 +1,8 @@
+.gradle/
+build/
+.idea/
+*.iml
+.env
+.claude/
+notes/
+!gradle/wrapper/gradle-wrapper.jar

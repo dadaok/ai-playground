@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "calc-java": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "/Users/hip-jilly/IdeaProjects/ai-playground/build/libs/mcp-calc-server.jar"
+      ]
+    }
+  }
+}
