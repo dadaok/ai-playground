@@ -14,6 +14,8 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.18.2")
     // 5단계 MCP 서버에서 JSON-RPC 를 직접 다루는 데 쓰는 Jackson
     implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    // 5b단계 RAG: pgvector(Postgres) JDBC 드라이버
+    implementation("org.postgresql:postgresql:42.7.4")
 }
 
 java {
@@ -58,6 +60,36 @@ tasks.register<JavaExec>("step6") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass = "playground.Step6Harness"
     standardInput = System.`in`
+}
+
+// ── 달빛커피 봇 시나리오 (playground.cafe) ──────────────────────────
+listOf(
+    "cafe1" to "playground.cafe.Cafe01Naive",
+    "cafe2" to "playground.cafe.Cafe02Tools",
+).forEach { (taskName, main) ->
+    tasks.register<JavaExec>(taskName) {
+        group = "cafe"
+        description = "달빛커피 봇: $main"
+        classpath = sourceSets["main"].runtimeClasspath
+        mainClass = main
+        standardInput = System.`in`
+    }
+}
+
+// `./gradlew step4b` — 실무형 RAG 파이프라인 (pgvector + Voyage)
+tasks.register<JavaExec>("step4b") {
+    group = "application"
+    description = "5b단계: RAG 심화 (임베딩/벡터DB/하이브리드/리랭킹)"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "playground.rag.Step4bRag"
+}
+
+// `./gradlew step4bEval` — 검색 전략별 recall@k / MRR 비교
+tasks.register<JavaExec>("step4bEval") {
+    group = "application"
+    description = "5b단계: RAG 검색 전략 평가"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "playground.rag.Step4bEval"
 }
 
 // 5단계: MCP 서버를 실행 가능한 단일 jar 로 패키징한다.

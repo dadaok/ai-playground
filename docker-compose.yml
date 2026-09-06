@@ -1,0 +1,21 @@
+# 5b단계: pgvector (벡터 검색이 되는 Postgres)
+# 실행:  colima start   (Docker 데몬 없으면)
+#        docker-compose up -d
+# 접속:  psql postgresql://rag:rag@localhost:5433/rag
+# 중지:  docker-compose down        (데이터 유지)
+#        docker-compose down -v     (데이터까지 삭제)
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: rag
+      POSTGRES_DB: rag
+    ports:
+      - "5433:5432"          # 로컬 5433 -> 컨테이너 5432 (기존 Postgres와 안 겹치게)
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ragdata:/var/lib/postgresql/data
+
+volumes:
+  ragdata:
