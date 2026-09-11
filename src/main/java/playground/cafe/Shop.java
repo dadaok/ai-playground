@@ -28,6 +28,14 @@ public final class Shop {
             "디카페인", 50
     ));
 
+    /** 원두명 → 맛/로스팅 노트 (원두정보.txt 요약). Cafe03 에서 대안 추천에 쓴다. */
+    public static final Map<String, String> CATALOG = new LinkedHashMap<>(Map.of(
+            "에티오피아 예가체프", "밝은 산미, 꽃향, 홍차 같은 뒷맛. 라이트 로스팅. 핸드드립용.",
+            "콜롬비아 수프리모", "균형 잡힌 바디, 초콜릿·견과 풍미. 미디엄 로스팅. 아메리카노에 무난.",
+            "과테말라 안티구아", "스모키하고 스파이시, 묵직한 바디. 미디엄다크 로스팅.",
+            "디카페인", "콜롬비아 원두를 스위스 워터 방식으로 카페인 제거. 카페인 0.1% 미만. 상시 판매."
+    ));
+
     public static Order order(String id) {
         return ORDERS.get(id == null ? "" : id.trim());
     }

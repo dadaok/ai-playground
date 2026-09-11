@@ -66,6 +66,7 @@ tasks.register<JavaExec>("step6") {
 listOf(
     "cafe1" to "playground.cafe.Cafe01Naive",
     "cafe2" to "playground.cafe.Cafe02Tools",
+    "cafe3" to "playground.cafe.Cafe03Agent",
 ).forEach { (taskName, main) ->
     tasks.register<JavaExec>(taskName) {
         group = "cafe"
